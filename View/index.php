@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Foro D&D</title>
-    <link rel="stylesheet" href="Resources/styles.css">
+    <link rel="stylesheet" href="../Resources/styles.css">
 </head>
 
 <body>
-<?php include 'Resources/header.php' ?>
-<h1>Foro sobre el juego de rol mas famoso del mundo</h1>
+<?php include '../Resources/header.php' ?>
+<h1>Temas de hoy</h1>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -28,6 +28,6 @@
 
 
 
-<?php include 'Resources/footer.php' ?>
+<?php include '../Resources/footer.php' ?>
 </body>
 </html>
