@@ -21,7 +21,7 @@
 
     <nav class="navbar">
         <a href="">Registrate</a>
-        <a href="AltaUsuario.php">Crea una nueva cuenta</a>
+        <a href="../Controler/altaUsuarioController.php">Crea una nueva cuenta</a>
     </nav>
 </header>
 </body>

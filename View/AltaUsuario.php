@@ -1,10 +1,5 @@
 <?php
-/*
-Permite a los usuarios crear una nueva entrada en la base de datos
-*/
-
-// Crear el nuevo formulario de registro
-function renderForm($username, $email, $password, $error)
+function renderForm($username = '', $email = '', $password = '', $error = '')
 {
     ?>
     <!DOCTYPE html>
@@ -22,12 +17,11 @@ function renderForm($username, $email, $password, $error)
     <h3>Recuerda loggearte para postear :)</h3>
     <div class="form-container">
         <?php
-        // Si hay errores, los muestra en pantalla
         if ($error != '') {
             echo '<div style="padding:4px; border:1px solid red; color:#ff0000;">' . $error . '</div>';
         }
         ?>
-        <form action="" method="post">
+        <form action="../Controler/altaUsuarioController.php" method="post">
             <div class="form-group">
                 <label for="username">Nombre de usuario:</label>
                 <input type="text" id="username" name="username" value="<?php echo $username; ?>" required>
@@ -51,33 +45,5 @@ function renderForm($username, $email, $password, $error)
     </html>
     <?php
 }
-
-include('../Model/connect-db.php');
-
-// Comprueba si el formulario ha sido enviado.
-// Si se ha enviado, comienza el proceso el formulario y guarda los datos en la DB
-if (isset($_POST['submit'])) {
-    // Obtenemos los datos del formulario, asegurándonos que son válidos.
-    $username = htmlspecialchars($_POST['username']);
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
-
-    // Comprueba que todos los campos han sido introducidos
-    if ($username == '' || $email == '' || $password == '') {
-        // Genera el mensaje de error
-        $error = 'ERROR: Por favor, introduce todos los campos requeridos.!';
-        // Si algún campo está en blanco, muestra el formulario otra vez
-        renderForm($username, $email, $password, $error);
-    } else {
-        // Guardamos los datos en la base de datos
-        $sentencia = "INSERT INTO usuarios (username, email, password) VALUES ('$username', '$email', '$password')" or die(mysqli_error($connection));
-
-        mysqli_query($connection, $sentencia);
-        /* Una vez que han sido guardados, redirigimos a la página de vista principal*/
-        header("Location: index.php");
-    }
-} else {
-    // Si el formulario no ha sido enviado, muestra el formulario
-    renderForm('', '', '', '');
-}
 ?>
+
