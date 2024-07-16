@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $usuario = new Usuario($connection);
         if ($usuario->createUser($username, $email, $password)) {
-            header("Location: ../index.php");
+            header("Location: ../View/index.php");
+            exit();
         } else {
             $error = 'ERROR: No se pudo crear el usuario. Inténtalo de nuevo.';
             renderForm($username, $email, $password, $error);

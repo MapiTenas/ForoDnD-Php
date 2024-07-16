@@ -15,6 +15,7 @@ function renderForm($username = '', $email = '', $password = '', $error = '')
     <h2>¡Bienvenid@! </h2>
     <h3>Estás apunto de unirte al foro con la comunidad más activa en castellano del juego de rol más importante del mundo. </h3>
     <h3>Recuerda loggearte para postear :)</h3>
+    <br>
     <div class="form-container">
         <?php
         if ($error != '') {

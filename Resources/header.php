@@ -20,7 +20,7 @@
     </div>
 
     <nav class="navbar">
-        <a href="">Registrate</a>
+        <a href="../View/formulario_login.php">Registrate</a>
         <a href="../Controler/altaUsuarioController.php">Crea una nueva cuenta</a>
     </nav>
 </header>
