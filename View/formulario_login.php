@@ -11,7 +11,7 @@
 <br>
 <h1>Iniciar sesión</h1>
 <h2>Estás a un clic de poder empezar a postear tus propios temas. </h2>
-<h3>Recuerda mantener tu contraseña secreta</h3>
+<h3>Introduce tus datos</h3>
 <br>
 <div class="form-container">
     <form action="../login.php" method="post">
@@ -29,9 +29,37 @@
     </form>
 </div>
 
+<div id="error-popup" class="popup"></div>
+
+<h3>Recuerda mantener tu contraseña secreta</h3>
+
 <br>
 <br>
 
 <?php include '../Resources/footer.php' ?>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener el mensaje de error de la sesión PHP
+        var errorMsg = "<?php echo isset($_SESSION['login_error']) ? $_SESSION['login_error'] : ''; ?>";
+        if (errorMsg) {
+            // Mostrar el popup con el mensaje de error
+            var popup = document.getElementById("error-popup");
+            popup.textContent = errorMsg;
+            popup.style.display = "block";
+
+            // Ocultar el popup después de 5 segundos
+            setTimeout(function() {
+                popup.style.display = "none";
+            }, 5000);
+
+            // Limpiar el mensaje de error después de mostrarlo
+            <?php $_SESSION['login_error'] = ''; ?>
+        }
+    });
+</script>
+
+
+
 </body>
 </html>

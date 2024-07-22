@@ -3,6 +3,8 @@ session_start(); // Iniciar sesión PHP
 
 include 'Model/CONNECT-DB.php'; // Asegúrate de incluir el archivo de conexión
 
+$_SESSION['login_error'] = '';
+
 // Verificar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $username = htmlspecialchars($_POST['username']);
@@ -26,13 +28,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 header("Location: View/index.php");
                 exit();
             } else {
-                echo "<p>Contraseña incorrecta.</p>";
+                $_SESSION['login_error'] = 'Contraseña incorrecta.';
             }
         } else {
-            echo "<p>Nombre de usuario incorrecto.</p>";
+            $_SESSION['login_error'] = 'Nombre de usuario incorrecto.';
         }
     } else {
-        echo "<p>Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo de nuevo más tarde.</p>";
+        $_SESSION['login_error'] = 'Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo de nuevo más tarde.';
     }
+    // Redirigir de vuelta al formulario de login con el mensaje de error
+    header("Location: View/formulario_login.php");
+    exit();
+
 }
 ?>
