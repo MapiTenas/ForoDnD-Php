@@ -1,3 +1,4 @@
+<?php include '../Resources/session_start.php'; ?>
 <?php
 function renderForm($username = '', $email = '', $password = '', $error = '')
 {
@@ -17,11 +18,6 @@ function renderForm($username = '', $email = '', $password = '', $error = '')
     <h3>Recuerda loggearte para postear :)</h3>
     <br>
     <div class="form-container">
-        <?php
-        if ($error != '') {
-            echo '<div style="padding:4px; border:1px solid red; color:#ff0000;">' . $error . '</div>';
-        }
-        ?>
         <form action="../Controler/altaUsuarioController.php" method="post">
             <div class="form-group">
                 <label for="username">Nombre de usuario:</label>
@@ -40,8 +36,34 @@ function renderForm($username = '', $email = '', $password = '', $error = '')
             </div>
         </form>
     </div>
+    <div id="error-popup" class="popup"></div>
     <br>
     <?php include '../Resources/footer.php' ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener el mensaje de error de la sesión PHP
+            var errorMsg = "<?php echo isset($_SESSION['register_error']) ? $_SESSION['register_error'] : ''; ?>";
+            if (errorMsg) {
+                // Mostrar el popup con el mensaje de error
+                var popup = document.getElementById("error-popup");
+                popup.textContent = errorMsg;
+                popup.style.display = "block";
+
+                // Ocultar el popup después de 5 segundos
+                setTimeout(function() {
+                    popup.style.display = "none";
+                }, 5000);
+
+                // Limpiar el mensaje de error después de mostrarlo
+                <?php $_SESSION['register_error'] = ''; ?>
+            }
+        });
+    </script>
+
+
+
+
     </body>
     </html>
     <?php
