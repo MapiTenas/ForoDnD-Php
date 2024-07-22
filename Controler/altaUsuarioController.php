@@ -11,7 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($username == '' || $email == '' || $password == '') {
         $_SESSION['register_error'] = 'ERROR: Por favor, introduce todos los campos requeridos.';
-        header("Location: ../View/AltaUsuario.php");
+        header("Location: ../Controler/altaUsuarioController.php");
+        exit();
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['register_error'] = 'ERROR: Por favor, introduce un correo electrónico válido.';
+        header("Location: ../Controler/altaUsuarioController.php");
         exit();
     } else {
         $usuario = new Usuario($connection);
