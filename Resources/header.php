@@ -1,3 +1,4 @@
+<?php include '../Resources/session_start.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +21,16 @@
     </div>
 
     <nav class="navbar">
-        <a href="../View/formulario_login.php">Registrate</a>
-        <a href="../Controler/altaUsuarioController.php">Crea una nueva cuenta</a>
-    </nav>
+        <?php
+        if (isset($_SESSION['username'])) {
+            // El usuario ha iniciado sesión, mostramos el enlace de Cerrar sesión
+            echo '<a href="../Controler/logout.php">Cerrar sesión</a>';
+        } else {
+            // El usuario no ha iniciado sesión, mostramos los enlaces de Registrate y Crea una nueva cuenta
+            echo '<a href="../View/formulario_login.php">Registrate</a>';
+            echo '<a href="../Controler/altaUsuarioController.php">Crea una nueva cuenta</a>';
+        }
+        ?>
 </header>
 </body>
 
