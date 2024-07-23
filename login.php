@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $connection = getDbConnection();
 
     // Consulta SQL para obtener el usuario por su nombre de usuario
-    $stmt = $connection->prepare("SELECT id, username, password FROM usuarios WHERE username = ?");
+    $stmt = $connection->prepare("SELECT id, username, password, role FROM usuarios WHERE username = ?");
     $stmt->bind_param("s", $username);
 
     if ($stmt->execute()) {
@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 // Contraseña válida, iniciar sesión
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
 
                 // Redirigimos a la página principal
                 header("Location: View/index.php");
