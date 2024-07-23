@@ -1,7 +1,7 @@
 <?php
 session_start(); // Iniciar sesión PHP
 
-include 'Model/CONNECT-DB.php'; // Asegúrate de incluir el archivo de conexión
+include 'Model/CONNECT-DB.php';
 
 $_SESSION['login_error'] = '';
 
@@ -9,6 +9,8 @@ $_SESSION['login_error'] = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
+
+    $connection = getDbConnection();
 
     // Consulta SQL para obtener el usuario por su nombre de usuario
     $stmt = $connection->prepare("SELECT id, username, password FROM usuarios WHERE username = ?");
@@ -24,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
 
-                // Redirigir a la página principal o a donde desees
+                // Redirigimos a la página principal
                 header("Location: View/index.php");
                 exit();
             } else {

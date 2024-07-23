@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../Controler/altaUsuarioController.php");
         exit();
     } else {
+        $connection = getDbConnection($connection);
         $usuario = new Usuario($connection);
         if ($usuario->createUser($username, $email, $password)) {
             header("Location: ../View/index.php");
