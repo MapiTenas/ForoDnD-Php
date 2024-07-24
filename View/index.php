@@ -51,6 +51,7 @@ if (isset($_SESSION['username'])) {
             echo '<div class="card">';
             echo '<h2 class="card-title">' . htmlspecialchars($categoria->getNombre()) . '</h2>';
             echo '<p class="card-description">' . htmlspecialchars($categoria->getDescripcion()) . '</p>';
+            echo '<a href ="ver_temas.php?id=' . htmlspecialchars($categoria->getId()) . '">Ver más</a>';
             if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 echo '<form method="POST" action="index.php" onsubmit="return confirm(\'¿Estás seguro de que quieres eliminar esta categoría?\');">';
                 echo '<input type="hidden" name="id" value="' . htmlspecialchars($categoria->getId()) . '">';
