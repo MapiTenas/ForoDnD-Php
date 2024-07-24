@@ -230,3 +230,54 @@ button:hover {
 .btn-delete:hover {
     background-color: darkred;
 }
+/* CSS para el contenedor de temas */
+.topic-container {
+    display: block;
+    padding: 20px;
+}
+
+/* CSS para cada tarjeta de tema */
+.topic-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 900px;
+    margin: 15px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.topic-card:hover {
+    transform: translateY(-5px);
+}
+
+/* CSS para el título del tema */
+.topic-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* CSS para el contenido del tema */
+.topic-content {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* CSS para el pie de la tarjeta de tema */
+.topic-footer {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* CSS para el autor y la fecha */
+.topic-author, .topic-date {
+    display: inline-block;
+}
