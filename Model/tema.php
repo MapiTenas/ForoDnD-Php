@@ -16,7 +16,7 @@ class tema {
         $this->titulo = $titulo;
         $this->contenido = $contenido;
         $this->usuario_id = $usuario_id;
-        $this->usuario_username = $usuario_username; // Inicializar nuevo atributo
+        $this->usuario_username = $usuario_username;
         $this->created_at = $created_at;
     }
 
@@ -39,7 +39,7 @@ class tema {
                 $fila['titulo'],
                 $fila['contenido'],
                 $fila['usuario_id'],
-                $fila['usuario_username'], // Obtener nombre del usuario
+                $fila['usuario_username'],
                 $fila['created_at']
             );
         }

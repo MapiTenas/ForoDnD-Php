@@ -21,6 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $connection = getDbConnection($connection);
         $usuario = new Usuario($connection);
         if ($usuario->createUser($username, $email, $password)) {
+            // Enviar correo de bienvenida
+            $to = $email;
+            $subject = 'Bienvenido/a al foro de Dungeons & Dragons';
+            $message = "Hola $username,\n\nGracias por registrarte en nuestro foro de Dungeons & Dragons. Esperamos que disfrutes de nuestra comunidad.\n\nSaludos!";
+            $headers = 'From: dungeonsdragonsforophp@gmail.com' . "\r\n" .
+                'Reply-To: dungeonsdragonsforophp@gmail.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            try {
+                if (!mail($to, $subject, $message, $headers)) {
+                    throw new Exception('Error al enviar correo de bienvenida');
+                }
+            } catch (Exception $e) {
+            }
             header("Location: ../View/index.php");
             exit();
         } else {
