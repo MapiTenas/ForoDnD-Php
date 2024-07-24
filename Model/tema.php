@@ -7,20 +7,25 @@ class tema {
     private $titulo;
     private $contenido;
     private $usuario_id;
+    private $usuario_username;
     private $created_at;
 
-    public function __construct($id, $categoria_id, $titulo, $contenido, $usuario_id, $created_at) {
+    public function __construct($id, $categoria_id, $titulo, $contenido, $usuario_id, $usuario_username, $created_at) {
         $this->id = $id;
         $this->categoria_id = $categoria_id;
         $this->titulo = $titulo;
         $this->contenido = $contenido;
         $this->usuario_id = $usuario_id;
+        $this->usuario_username = $usuario_username; // Inicializar nuevo atributo
         $this->created_at = $created_at;
     }
 
     public static function obtenerTemasPorCategoria($categoria_id) {
         $conexion = getDbConnection();
-        $query = "SELECT * FROM temas WHERE categoria_id = ?";
+        $query = "SELECT t.id, t.categoria_id, t.titulo, t.contenido, t.usuario_id, u.username AS usuario_username, t.created_at
+                  FROM temas t
+                  JOIN usuarios u ON t.usuario_id = u.id
+                  WHERE t.categoria_id = ?";
         $stmt = $conexion->prepare($query);
         $stmt->bind_param("i", $categoria_id);
         $stmt->execute();
@@ -34,10 +39,10 @@ class tema {
                 $fila['titulo'],
                 $fila['contenido'],
                 $fila['usuario_id'],
+                $fila['usuario_username'], // Obtener nombre del usuario
                 $fila['created_at']
             );
         }
-
         $stmt->close();
         $conexion->close();
         return $temas;
@@ -84,6 +89,14 @@ class tema {
     public function setUsuarioId($usuario_id): void
     {
         $this->usuario_id = $usuario_id;
+    }
+
+    public function getUsuarioUsername() {
+        return $this->usuario_username;
+    }
+
+    public function setUsuarioUsername($usuario_username): void {
+        $this->usuario_username = $usuario_username;
     }
 
     public function getCreatedAt()

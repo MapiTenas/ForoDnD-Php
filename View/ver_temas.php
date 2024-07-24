@@ -41,7 +41,7 @@ if (isset($_GET['id'])) {
                 <h3 class="topic-title"><?php echo htmlspecialchars($tema->getTitulo()); ?></h3>
                 <p class="topic-content"><?php echo htmlspecialchars(substr($tema->getContenido(), 0, 100)) . '...'; ?></p>
                 <div class="topic-footer">
-                    <span class="topic-author">Usuario: <?php echo htmlspecialchars($tema->getUsuarioId()); ?></span>
+                    <span class="topic-author">Publicado por: <?php echo htmlspecialchars($tema->getUsuarioUsername()); ?></span>
                     <span class="topic-date">Fecha: <?php echo htmlspecialchars($tema->getCreatedAt()); ?></span>
                 </div>
             </div>
