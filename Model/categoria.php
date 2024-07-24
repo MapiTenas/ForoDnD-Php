@@ -27,7 +27,27 @@ class categoria {
         return $categorias;
     }
 
+    public function guardarNuevaCategoria() {
+        $conexion = getDbConnection();
+        $query = "INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("ss", $this->nombre, $this->descripcion);
+        $resultado = $stmt->execute();
+        $stmt->close();
+        $conexion->close();
+        return $resultado;
+    }
 
+    public function eliminarCategoria() {
+        $conexion = getDbConnection();
+        $query = "DELETE FROM categorias WHERE id = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $this->id);
+        $resultado = $stmt->execute();
+        $stmt->close();
+        $conexion->close();
+        return $resultado;
+    }
 
     public function getId()
     {

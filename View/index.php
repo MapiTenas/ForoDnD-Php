@@ -1,4 +1,21 @@
-<?php include '../Resources/session_start.php'; ?>
+<?php include '../Resources/session_start.php';
+require_once '../Controler/CategoriaController.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
+    if (isset($_POST['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+        $id = intval($_POST['id']);
+        $controller = new CategoriaController();
+        $resultado = $controller->eliminarCategoria($id);
+        if ($resultado) {
+            header("Location: index.php");
+            exit();
+        } else {
+            echo "Error al eliminar la categoría.";
+        }
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +38,7 @@ if (isset($_SESSION['username'])) {
 
 
 
-<h1>Temas de hoy</h1>
+<h1>Categorias del foro</h1>
 
 <div class="card-container">
     <?php
@@ -34,6 +51,12 @@ if (isset($_SESSION['username'])) {
             echo '<div class="card">';
             echo '<h2 class="card-title">' . htmlspecialchars($categoria->getNombre()) . '</h2>';
             echo '<p class="card-description">' . htmlspecialchars($categoria->getDescripcion()) . '</p>';
+            if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                echo '<form method="POST" action="index.php" onsubmit="return confirm(\'¿Estás seguro de que quieres eliminar esta categoría?\');">';
+                echo '<input type="hidden" name="id" value="' . htmlspecialchars($categoria->getId()) . '">';
+                echo '<input type="submit" name="eliminar" value="Eliminar" class="btn-delete">';
+                echo '</form>';
+            }
             echo '</div>';
         }
     } else {

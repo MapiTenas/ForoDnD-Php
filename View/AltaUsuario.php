@@ -1,6 +1,6 @@
 <?php include '../Resources/session_start.php'; ?>
 <?php
-function renderForm($username = '', $email = '', $password = '', $error = '')
+function renderForm($username = '', $email = '', $password = '')
 {
     ?>
     <!DOCTYPE html>
