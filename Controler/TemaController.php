@@ -11,6 +11,10 @@ class TemaController {
         return Tema::crearTema($categoria_id, $titulo, $contenido, $usuario_id);
     }
 
+    public function obtenerTemaPorId($id) {
+        return Tema::obtenerTemaPorId($id);
+    }
+
 }
 
 

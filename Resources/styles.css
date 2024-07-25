@@ -282,7 +282,7 @@ button:hover {
 }
 
 
-
+/*CSS para los inputs de textos mas grandes*/
 textarea {
     width: 100%;
     height: 200px;
@@ -291,4 +291,59 @@ textarea {
     border-radius: 5px;
     box-sizing: border-box;
     resize: vertical;
+}
+
+/*Css botón de ver temas*/
+.button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-view {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff; /* Color azul similar a otros botones */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Asegura que el texto esté centrado dentro del botón */
+}
+
+.btn-view:hover {
+    background-color: #0056b3; /* Color azul más oscuro al pasar el ratón */
+}
+
+
+/* CSS para el contenedor del detalle del tema */
+.topic-detail-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.topic-detail-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.topic-detail-content {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.topic-detail-footer {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }

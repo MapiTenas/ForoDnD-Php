@@ -67,6 +67,37 @@ class tema {
         return $id;
     }
 
+    public static function obtenerTemaPorId($id) {
+        $conexion = getDbConnection();
+        $query = "SELECT t.id, t.categoria_id, t.titulo, t.contenido, t.usuario_id, u.username AS usuario_username, t.created_at
+              FROM temas t
+              JOIN usuarios u ON t.usuario_id = u.id
+              WHERE t.id = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if ($fila = $resultado->fetch_assoc()) {
+            $tema = new Tema(
+                $fila['id'],
+                $fila['categoria_id'],
+                $fila['titulo'],
+                $fila['contenido'],
+                $fila['usuario_id'],
+                $fila['usuario_username'],
+                $fila['created_at']
+            );
+        } else {
+            $tema = null;
+        }
+
+        $stmt->close();
+        $conexion->close();
+        return $tema;
+    }
+
+
 
 
 
