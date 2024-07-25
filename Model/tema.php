@@ -97,6 +97,19 @@ class tema {
         return $tema;
     }
 
+    public static function eliminarTema($id) {
+        $conexion = getDbConnection();
+        $query = "DELETE FROM temas WHERE id = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $id);
+        $resultado = $stmt->execute();
+
+        $stmt->close();
+        $conexion->close();
+        return $resultado;
+    }
+
+
     public function getId()
     {
         return $this->id;

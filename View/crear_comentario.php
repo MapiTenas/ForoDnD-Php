@@ -1,6 +1,7 @@
 <?php
 include '../Resources/session_start.php';
 require_once '../Controler/ComentarioController.php';
+require_once '../Controler/TemaController.php';
 
 if (!isset($_SESSION['username'])) {
     header('Location: ../index.php');
@@ -29,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <?php include '../Resources/header.php'; ?>
-
+<br>
+<h2>Estas a punto de publicar un nuevo comentario</h2>
+<h3>Recuerda respetar las reglas del foro a la hora de postear</h3>
 <div class="form-container">
     <form action="crear_comentario.php" method="post">
         <div class="form-group">

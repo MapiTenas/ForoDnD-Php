@@ -44,6 +44,18 @@ if (isset($_GET['id'])) {
                 <p class="topic-content"><?php echo htmlspecialchars(substr($tema->getContenido(), 0, 100)) . '...'; ?></p>
                 <div class="topic-footer">
                     <span class="topic-author">Publicado por: <?php echo htmlspecialchars($tema->getUsuarioUsername()); ?></span>
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        // Verificar si el usuario es el autor del tema
+                        $isAuthor = $_SESSION['user_id'] == $tema->getUsuarioId();
+                        // Verificar si el usuario tiene rol de moderator o admin
+                        $isAdminOrModerator = isset($_SESSION['role']) && in_array($_SESSION['role'], ['admin', 'moderator']);
+
+                        if ($isAuthor || $isAdminOrModerator) {
+                            echo '<a href="ver_temas.php?id=' . htmlspecialchars($categoria->getId()) . '&action=delete&tema_id=' . htmlspecialchars($tema->getId()) . '">Eliminar</a>';
+                        }
+                    }
+                    ?>
                     <span class="topic-date">Fecha: <?php echo htmlspecialchars($tema->getCreatedAt()); ?></span>
                 </div>
                 <div class="button-container">

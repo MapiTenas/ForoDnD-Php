@@ -15,6 +15,31 @@ class TemaController {
         return Tema::obtenerTemaPorId($id);
     }
 
+    public function eliminarTema($id) {
+        return Tema::eliminarTema($id);
+    }
+
+}
+
+// Manejo de la solicitud para eliminar un tema
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'delete') {
+    if (isset($_GET['tema_id'])) {
+        $tema_id = intval($_GET['tema_id']);
+
+        // Aquí debes verificar los permisos del usuario para eliminar el tema
+        // Esto es solo un ejemplo, deberías tener una validación más segura
+        if (isset($_SESSION['user_id']) && (isset($_SESSION['role']) && in_array($_SESSION['role'], ['admin', 'moderator'])) || $_SESSION['user_id'] == Tema::obtenerTemaPorId($tema_id)->getUsuarioId()) {
+            $temaController = new TemaController();
+            if ($temaController->eliminarTema($tema_id)) {
+                header("Location: ../View/ver_temas.php?id=" . intval($_GET['id']));
+                exit();
+            } else {
+                echo "<p>Hubo un error al eliminar el tema.</p>";
+            }
+        } else {
+            echo "<p>No tienes permisos para eliminar este tema.</p>";
+        }
+    }
 }
 
 
