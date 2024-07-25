@@ -97,11 +97,6 @@ class tema {
         return $tema;
     }
 
-
-
-
-
-
     public function getId()
     {
         return $this->id;

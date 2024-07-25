@@ -1,12 +1,15 @@
 <?php
 include '../Resources/session_start.php';
 require_once '../Controler/TemaController.php';
+require_once '../Controler/ComentarioController.php';
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $temaController = new TemaController();
+    $comentarioController = new ComentarioController();
 
     $tema = $temaController->obtenerTemaPorId($id);
+    $comentarios = $comentarioController->obtenerComentariosPorTemaId($id);
 
     if (!$tema) {
         echo "Tema no encontrado.";
@@ -35,6 +38,18 @@ if (isset($_GET['id'])) {
         <span class="topic-detail-author">Publicado por: <?php echo htmlspecialchars($tema->getUsuarioUsername()); ?></span>
         <span class="topic-detail-date">Fecha: <?php echo htmlspecialchars($tema->getCreatedAt()); ?></span>
     </div>
+</div>
+<div class="comments-section">
+    <h3>Respuestas</h3>
+    <?php foreach ($comentarios as $comentario): ?>
+        <div class="comment-card">
+            <p class="comment-content"><?php echo nl2br(htmlspecialchars($comentario->getContenido())); ?></p>
+            <div class="comment-footer">
+                <span class="comment-author">Publicado por: <?php echo htmlspecialchars($comentario->getUsuarioUsername()); ?></span>
+                <span class="comment-date">Fecha: <?php echo htmlspecialchars($comentario->getCreatedAt()); ?></span>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <?php include '../Resources/footer.php'; ?>
