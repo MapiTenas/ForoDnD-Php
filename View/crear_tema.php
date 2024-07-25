@@ -9,32 +9,12 @@
 <body>
 <?php include '../Resources/header.php' ?>
 
-<?php
-if (isset($_SESSION['username'])) :
-    require_once '../Controler/TemaController.php';
-
-    // Recupero el id de la categoria para poder pasarlo al método POST
-    $categoria_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
-
-    if (isset($_POST['submit'])) {
-        $titulo = $_POST['titulo'];
-        $contenido = $_POST['contenido'];
-        $usuario_id = $_SESSION['user_id'];
-
-        $temaController = new TemaController();
-        $nuevo_tema_id = $temaController->crearTema($categoria_id, $titulo, $contenido, $usuario_id);
-
-        if ($nuevo_tema_id) {
-            echo "<p>Tema creado exitosamente!</p>";
-        } else {
-            echo "<p>Hubo un error al crear el tema.</p>";
-        }
-    }
-    ?>
-
+<?php if (isset($_SESSION['username'])) : ?>
     <h2>Postea un nuevo tema</h2>
+    <h3>Recuerda que los temas deben ir acordes a la categoria.</h3>
+
     <div class="form-container">
-        <form action="" method="post">
+        <form action="../Controler/TemaController.php?action=crear" method="post">
             <div class="form-group">
                 <label for="titulo">Titulo del nuevo tema:</label>
                 <input type="text" id="titulo" name="titulo" value="" required>
@@ -46,12 +26,10 @@ if (isset($_SESSION['username'])) :
             <div class="form-group">
                 <button type="submit" name="submit">Enviar nuevo tema</button>
             </div>
+            <input type="hidden" name="categoria_id" value="<?php echo intval($_GET['id'] ?? 1); ?>">
         </form>
     </div>
 <?php endif; ?>
-
-
-
 <?php include '../Resources/footer.php' ?>
 </body>
 

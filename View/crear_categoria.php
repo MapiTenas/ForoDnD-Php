@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripción para la nueva categoria:</label>
-                <input type="text" id="descripcion" name="descripcion" value="" required>
+                <textarea id="descripcion" name="descripcion" required> </textarea>
             </div>
             <div class="form-group">
                 <button type="submit" name="submit">Registrar</button>
