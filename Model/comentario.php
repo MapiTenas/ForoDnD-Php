@@ -45,6 +45,17 @@ class Comentario {
         return $comentarios;
     }
 
+    public static function crearComentario($contenido, $tema_id, $usuario_id) {
+        $conexion = getDbConnection();
+        $query = "INSERT INTO comentarios (contenido, tema_id, usuario_id, created_at) VALUES (?, ?, ?, NOW())";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("sii", $contenido, $tema_id, $usuario_id);
+        $stmt->execute();
+        $stmt->close();
+        $conexion->close();
+    }
+
+
     public function getId() {
         return $this->id;
     }

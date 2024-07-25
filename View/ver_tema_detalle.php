@@ -41,6 +41,8 @@ if (isset($_GET['id'])) {
 </div>
 <div class="comments-section">
     <h3>Respuestas</h3>
+    <?php if (isset($_SESSION['username']))
+        echo '<h3> Publica <a href="crear_comentario.php?id=' . htmlspecialchars($tema->getId()) . '">aqui</a> un nuevo comentario</h3>';    ?>
     <?php foreach ($comentarios as $comentario): ?>
         <div class="comment-card">
             <p class="comment-content"><?php echo nl2br(htmlspecialchars($comentario->getContenido())); ?></p>

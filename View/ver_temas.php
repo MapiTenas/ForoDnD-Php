@@ -46,7 +46,6 @@ if (isset($_GET['id'])) {
                     <span class="topic-author">Publicado por: <?php echo htmlspecialchars($tema->getUsuarioUsername()); ?></span>
                     <span class="topic-date">Fecha: <?php echo htmlspecialchars($tema->getCreatedAt()); ?></span>
                 </div>
-                <!-- Botón para ver el tema completo -->
                 <div class="button-container">
                     <a href="ver_tema_detalle.php?id=<?php echo htmlspecialchars($tema->getId()); ?>" class="btn-view">Ver Tema</a>
                 </div>
