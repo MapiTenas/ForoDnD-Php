@@ -47,6 +47,30 @@ class tema {
         $conexion->close();
         return $temas;
     }
+
+    public static function crearTema($categoria_id, $titulo, $contenido, $usuario_id) {
+        $conexion = getDbConnection();
+        $query = "INSERT INTO temas (categoria_id, titulo, contenido, usuario_id, created_at) VALUES (?, ?, ?, ?, NOW())";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("issi", $categoria_id, $titulo, $contenido, $usuario_id);
+
+        $resultado = $stmt->execute();
+
+        if ($resultado) {
+            $id = $stmt->insert_id;
+        } else {
+            $id = null;
+        }
+
+        $stmt->close();
+        $conexion->close();
+        return $id;
+    }
+
+
+
+
+
     public function getId()
     {
         return $this->id;

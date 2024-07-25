@@ -21,8 +21,6 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +32,11 @@ if (isset($_GET['id'])) {
 <body>
     <?php include '../Resources/header.php'; ?>
     <h1>Temas de la Categoría: <?php echo htmlspecialchars($nombreCategoria); ?></h1>
-
+    <?php
+    if (isset($_SESSION['username'])) {
+        echo '<h2> Publica <a href="crear_tema.php?id=' . htmlspecialchars($categoria->getId()) . '">aqui</a> un nuevo tema</h2>';
+    }
+    ?>
     <div class="topic-container">
         <?php foreach ($temas as $tema): ?>
             <div class="topic-card">
