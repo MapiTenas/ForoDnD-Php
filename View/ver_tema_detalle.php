@@ -15,6 +15,17 @@ if (isset($_GET['id'])) {
         echo "Tema no encontrado.";
         exit();
     }
+
+    if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['comment_id'])) {
+        $comment_id = intval($_GET['comment_id']);
+        try {
+            $comentarioController->eliminarComentarioPorId($comment_id);
+            header("Location: ver_tema_detalle.php?id=" . $id);
+            exit();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 } else {
     echo "ID de tema no proporcionado.";
     exit();
@@ -48,6 +59,15 @@ if (isset($_GET['id'])) {
             <p class="comment-content"><?php echo nl2br(htmlspecialchars($comentario->getContenido())); ?></p>
             <div class="comment-footer">
                 <span class="comment-author">Publicado por: <?php echo htmlspecialchars($comentario->getUsuarioUsername()); ?></span>
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $isAuthor = $_SESSION['user_id'] == $comentario->getUsuarioId();
+                    $isAdminOrModerator = isset($_SESSION['role']) && in_array($_SESSION['role'], ['admin', 'moderator']);
+                    if ($isAuthor || $isAdminOrModerator) {
+                        echo '<a href="ver_tema_detalle.php?id=' . htmlspecialchars($tema->getId()) . '&action=delete&comment_id=' . htmlspecialchars($comentario->getId()) . '">Eliminar</a>';
+                    }
+                }
+                ?>
                 <span class="comment-date">Fecha: <?php echo htmlspecialchars($comentario->getCreatedAt()); ?></span>
             </div>
         </div>

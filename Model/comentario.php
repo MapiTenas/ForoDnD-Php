@@ -36,7 +36,7 @@ class Comentario {
                 $fila['contenido'],
                 $fila['tema_id'],
                 $fila['usuario_id'],
-                $fila['usuario_username'], // Asignamos el valor obtenido del JOIN
+                $fila['usuario_username'],
                 $fila['created_at']
             );
         }
@@ -55,6 +55,42 @@ class Comentario {
         $conexion->close();
     }
 
+    public static function obtenerComentarioPorId($id) {
+        $conexion = getDbConnection();
+        $query = "SELECT c.id, c.contenido, c.tema_id, c.usuario_id, u.username AS usuario_username, c.created_at
+                  FROM comentarios c
+                  JOIN usuarios u ON c.usuario_id = u.id
+                  WHERE c.id = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        $comentario = null;
+        if ($fila = $resultado->fetch_assoc()) {
+            $comentario = new Comentario(
+                $fila['id'],
+                $fila['contenido'],
+                $fila['tema_id'],
+                $fila['usuario_id'],
+                $fila['usuario_username'],
+                $fila['created_at']
+            );
+        }
+        $stmt->close();
+        $conexion->close();
+        return $comentario;
+    }
+
+    public static function eliminarComentarioPorId($id) {
+        $conexion = getDbConnection();
+        $query = "DELETE FROM comentarios WHERE id = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+        $conexion->close();
+    }
 
     public function getId() {
         return $this->id;
