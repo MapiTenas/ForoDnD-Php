@@ -40,13 +40,59 @@ class categoria {
 
     public function eliminarCategoria() {
         $conexion = getDbConnection();
-        $query = "DELETE FROM categorias WHERE id = ?";
-        $stmt = $conexion->prepare($query);
-        $stmt->bind_param("i", $this->id);
-        $resultado = $stmt->execute();
-        $stmt->close();
-        $conexion->close();
-        return $resultado;
+        $conexion->begin_transaction();
+
+        try {
+            // Primero, obtenemos todos los temas asociados con la categoría
+            $queryTemas = "SELECT id FROM temas WHERE categoria_id = ?";
+            $stmtTemas = $conexion->prepare($queryTemas);
+            $stmtTemas->bind_param("i", $this->id);
+            $stmtTemas->execute();
+            $resultTemas = $stmtTemas->get_result();
+            $temasIds = [];
+
+            while ($row = $resultTemas->fetch_assoc()) {
+                $temasIds[] = $row['id'];
+            }
+            $stmtTemas->close();
+
+            // Ahora eliminamos los comentarios asociados a esos temas
+            if (!empty($temasIds)) {
+                $queryComentarios = "DELETE FROM comentarios WHERE tema_id IN (" . implode(',', $temasIds) . ")";
+                $stmtComentarios = $conexion->prepare($queryComentarios);
+                $stmtComentarios->execute();
+                $stmtComentarios->close();
+            }
+
+            // Luego eliminamos los temas asociados a la categoría
+            if (!empty($temasIds)) {
+                $queryEliminarTemas = "DELETE FROM temas WHERE categoria_id = ?";
+                $stmtEliminarTemas = $conexion->prepare($queryEliminarTemas);
+                $stmtEliminarTemas->bind_param("i", $this->id);
+                $stmtEliminarTemas->execute();
+                $stmtEliminarTemas->close();
+            }
+
+            // Finalmente, eliminamos la categoría
+            $queryEliminarCategoria = "DELETE FROM categorias WHERE id = ?";
+            $stmtEliminarCategoria = $conexion->prepare($queryEliminarCategoria);
+            $stmtEliminarCategoria->bind_param("i", $this->id);
+            $resultado = $stmtEliminarCategoria->execute();
+            $stmtEliminarCategoria->close();
+
+            if (!$resultado) {
+                throw new Exception("Error al eliminar la categoría.");
+            }
+
+            $conexion->commit();
+            $conexion->close();
+            return true;
+        } catch (Exception $e) {
+            $conexion->rollback();
+            $conexion->close();
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
     public function getId()

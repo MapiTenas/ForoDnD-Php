@@ -99,14 +99,36 @@ class tema {
 
     public static function eliminarTema($id) {
         $conexion = getDbConnection();
-        $query = "DELETE FROM temas WHERE id = ?";
-        $stmt = $conexion->prepare($query);
-        $stmt->bind_param("i", $id);
-        $resultado = $stmt->execute();
+        $conexion->begin_transaction();
 
-        $stmt->close();
-        $conexion->close();
-        return $resultado;
+        try {
+            // Primero, eliminamos todos los comentarios asociados al tema
+            $queryComentarios = "DELETE FROM comentarios WHERE tema_id = ?";
+            $stmtComentarios = $conexion->prepare($queryComentarios);
+            $stmtComentarios->bind_param("i", $id);
+            $stmtComentarios->execute();
+            $stmtComentarios->close();
+
+            // Ahora eliminamos el tema
+            $queryTema = "DELETE FROM temas WHERE id = ?";
+            $stmtTema = $conexion->prepare($queryTema);
+            $stmtTema->bind_param("i", $id);
+            $resultado = $stmtTema->execute();
+            $stmtTema->close();
+
+            if (!$resultado) {
+                throw new Exception("Error al eliminar el tema.");
+            }
+
+            $conexion->commit();
+            $conexion->close();
+            return true;
+        } catch (Exception $e) {
+            $conexion->rollback();
+            $conexion->close();
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
 
