@@ -396,3 +396,24 @@ textarea {
 .comment-author, .comment-date {
     display: inline-block;
 }
+
+/*Css tabla usuarios */
+table {
+    width: 80%; /* Cambia esto al porcentaje que desees */
+    max-width: 1000px; /* Cambia esto al ancho máximo que desees */
+    margin: 20px auto; /* Esto centra la tabla horizontalmente */
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #ff010b;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+

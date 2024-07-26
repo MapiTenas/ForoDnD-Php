@@ -32,6 +32,7 @@ if (isset($_SESSION['username'])) {
     // Verificar si el usuario es administrador
     if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
         echo '<h2>Como administrador, puedes crear nuevas categorias. Haz clic <a href="crear_categoria.php">aqui</a> para ir al formulario.</h2>';
+        echo '<h2>Gestiona a los usuarios del foro desde <a href="gestion_usuarios.php">aqui</a>.</h2>';
     }
 }
 ?>
